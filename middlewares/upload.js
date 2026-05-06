@@ -9,7 +9,7 @@ const path = require("path")
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     // file yang diupload akan disimpan di folder project ini bagian upload
-    cb(null, path(__dirname, "../uploads"))
+    cb(null, path.join(__dirname, "../uploads"))
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
@@ -20,3 +20,5 @@ const storage = multer.diskStorage({
     cb(null, name)
   }
 })
+
+module.exports = multer({ storage: storage })

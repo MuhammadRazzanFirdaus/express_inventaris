@@ -19,7 +19,15 @@ module.exports = (sequelize, DataTypes) => {
   Item.init({
     name: DataTypes.STRING,
     stock: DataTypes.INTEGER,
-    image: DataTypes.STRING
+    image: {
+      type: DataTypes.STRING,
+      get() {
+        // getter untuk memanipulasi data untuk responsenya
+        const rawValue = this.getDataValue('image');
+        // image yang di db cuman filename, di response jadi link yang bisa dibuka/ditampilkan gambarnya
+        return rawValue ? `http://localhost:3000/uploads/${rawValue}` : null;
+      },
+    }
   }, {
     sequelize,
     modelName: 'Item',
